@@ -2,10 +2,10 @@
     --pink-light-bg: #FFF0F5;    /* Fondo rosado pastel */
     --pink-card-bg: #FFFFFF;     /* Tarjetas blancas con sombras rosadas */
     --pink-soft: #FFB6C1;        /* Rosado claro */
-    --fuchsia-main: #D81B60;     /* Fucsia principal */
-    --fuchsia-dark: #9C0D38;     /* Fucsia oscuro para Header/Footer */
-    --text-dark: #33222A;        /* Texto oscuro cálido */
-    --shadow-pink: rgba(216, 27, 96, 0.12);
+    --fuchsia-main: #e94782;     /* Fucsia principal */
+    --fuchsia-dark: #d33e6b;     /* Fucsia oscuro para Header/Footer */
+    --text-dark: #af6d8c;        /* Texto oscuro cálido */
+    --shadow-pink: rgb(255, 2, 2);
 }
 
 body {
@@ -36,7 +36,7 @@ main { flex: 1; }
 }
 
 .section-header {
-    background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+    background: linear-gradient(135deg, hsl(336, 79%, 59%) 0%, #E91E63 100%);
 }
 
 /* Botones */
@@ -82,6 +82,8 @@ main { flex: 1; }
     border-color: var(--fuchsia-main);
     box-shadow: 0 0 0 0.25rem rgba(216, 27, 96, 0.15);
 }
+
+
 
 /* Footer */
 footer {
