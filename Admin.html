@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GasExpress - Administración</title>
+
+    <!-- Protección de acceso: si no hay sesión de admin, se redirige al Login.
+         Va antes de cargar el CSS a propósito, para redirigir lo antes posible. -->
+    <script>
+        (function () {
+            const sesionGuardada = JSON.parse(localStorage.getItem('gasexpress_sesion'));
+            if (!sesionGuardada || !sesionGuardada.esAdmin) {
+                window.location.href = 'Login.html';
+            }
+        })();
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ESTILOS.css">
+</head>
+<body>
+
+    <nav id="navbar-gasexpress"></nav>
+
+    <main class="container py-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h1 class="fw-bold">Panel de Administración</h1>
+                <p class="text-muted mb-0">Gestión de productos de GasExpress</p>
+            </div>
+            <button id="btnCerrarSesionAdmin" class="btn btn-danger">Cerrar sesión</button>
+        </div>
+
+        <!-- Resumen -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card card-custom shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-muted">Productos</h6>
+                        <h2 id="totalProductos" class="text-fuchsia">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-custom shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-muted">Unidades en stock</h6>
+                        <h2 id="totalStock" class="text-fuchsia">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-custom shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-muted">Categorías</h6>
+                        <h2 id="totalCategorias" class="text-fuchsia">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de productos -->
+        <div class="card card-custom shadow-sm border-0">
+            <div class="card-header text-white" style="background: var(--fuchsia-dark);">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Productos</h2>
+                    <button class="btn btn-success btn-sm" id="btnNuevoProducto">+ Nuevo producto</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaProductos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario Crear / Editar -->
+        <div id="formularioProducto" class="card card-custom shadow-sm border-0 mt-4 d-none">
+            <div class="card-header text-white" style="background: var(--fuchsia-main);">
+                <h2 class="h5 mb-0">Agregar producto</h2>
+            </div>
+            <div class="card-body">
+                <form id="formProducto">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="nombreProducto" class="form-label">Nombre</label>
+                            <input type="text" id="nombreProducto" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="categoriaProducto" class="form-label">Categoría</label>
+                            <input type="text" id="categoriaProducto" class="form-control form-control-custom" placeholder="Ej: Compacto, Hogar, Comercial" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="precioProducto" class="form-label">Precio (CLP)</label>
+                            <input type="number" id="precioProducto" class="form-control form-control-custom" min="0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="stockProducto" class="form-label">Stock</label>
+                            <input type="number" id="stockProducto" class="form-control form-control-custom" min="0" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="imagenProducto" class="form-label">Ruta o URL de imagen</label>
+                            <input type="text" id="imagenProducto" class="form-control form-control-custom" placeholder="img/gas11kg.png o https://..." required>
+                        </div>
+                        <div class="col-12">
+                            <label for="descripcionProducto" class="form-label">Descripción</label>
+                            <textarea id="descripcionProducto" class="form-control form-control-custom" rows="2" placeholder="Breve descripción del producto"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="checkbox" id="destacadoProducto" class="form-check-input">
+                                <label for="destacadoProducto" class="form-check-label">Mostrar como producto destacado en Inicio</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-custom">Guardar producto</button>
+                            <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3"><span class="logo-gas">Gas</span>Express</h5>
+                    <p>Distribuidora de gas por la Quinta Región. Llevando energía y calor a cada rincón de tu hogar.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5 class="fw-bold mb-3">Contacto</h5>
+                    <p class="mb-1">📩 gasexpress@gmail.com</p>
+                    <p class="mb-0">📍 Valparaíso, Chile</p>
+                </div>
+            </div>
+            <hr class="my-4 border-light opacity-25">
+            <p class="text-center mb-0 small">&copy; 2026 GasExpress. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/componentes.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
