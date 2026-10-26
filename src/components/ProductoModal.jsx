@@ -35,7 +35,7 @@ export default function ProductoModal({ producto, productos, guardar, cerrar }) 
       <Form onSubmit={enviar} noValidate>
         <Modal.Body>
           {campos.map(({ clave, etiqueta, tipo }) => (
-            <Form.Group className="mb-3" key={clave}>
+            <Form.Group className="mb-3" key={clave} controlId={`producto-${clave}`}>
               <Form.Label>{etiqueta}</Form.Label>
               <Form.Control
                 type={tipo}

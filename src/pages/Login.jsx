@@ -47,12 +47,12 @@ export default function Login() {
         <Col md={6}>
           <h2>Iniciar sesión</h2>
           <Form onSubmit={enviarLogin}>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="login-email">
               <Form.Label>Correo electrónico</Form.Label>
               <Form.Control value={loginForm.email}
                 onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} required />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="login-password">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control type="password" value={loginForm.password}
                 onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} required />
@@ -67,17 +67,17 @@ export default function Login() {
         <Col md={6}>
           <h2>Crear cuenta</h2>
           <Form onSubmit={enviarRegistro}>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="registro-nombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control value={regForm.nombre}
                 onChange={(e) => setRegForm({ ...regForm, nombre: e.target.value })} required />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="registro-email">
               <Form.Label>Correo electrónico</Form.Label>
               <Form.Control value={regForm.email}
                 onChange={(e) => setRegForm({ ...regForm, email: e.target.value })} required />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="registro-password">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control type="password" value={regForm.password}
                 onChange={(e) => setRegForm({ ...regForm, password: e.target.value })} required />
